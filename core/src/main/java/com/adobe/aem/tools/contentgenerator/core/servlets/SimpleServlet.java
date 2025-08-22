@@ -15,16 +15,12 @@
  */
 package com.adobe.aem.tools.contentgenerator.core.servlets;
 
-import com.day.cq.commons.jcr.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
-import org.apache.sling.servlets.annotations.SlingServletResourceTypes;
+import org.apache.sling.servlets.annotations.SlingServletPaths;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.propertytypes.ServiceDescription;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -37,11 +33,7 @@ import java.io.IOException;
  * idempotent. For write operations use the {@link SlingAllMethodsServlet}.
  */
 @Component(service = { Servlet.class })
-@SlingServletResourceTypes(
-        resourceTypes="contentgenerator/components/page",
-        methods=HttpConstants.METHOD_GET,
-        extensions="txt")
-@ServiceDescription("Simple Demo Servlet")
+@SlingServletPaths("/bin/hello")
 public class SimpleServlet extends SlingSafeMethodsServlet {
 
     private static final long serialVersionUID = 1L;
@@ -49,8 +41,7 @@ public class SimpleServlet extends SlingSafeMethodsServlet {
     @Override
     protected void doGet(final SlingHttpServletRequest req,
             final SlingHttpServletResponse resp) throws ServletException, IOException {
-        final Resource resource = req.getResource();
         resp.setContentType("text/plain");
-        resp.getWriter().write("Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE));
+        resp.getWriter().write("Hello from SimpleServlet!");
     }
 }

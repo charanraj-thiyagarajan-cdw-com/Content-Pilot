@@ -12,7 +12,9 @@
  |  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  |  See the License for the specific language governing permissions and
  |  limitations under the License.
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.adobe.aem.tools</groupId>
   <artifactId>aem-content-generator</artifactId>
@@ -46,7 +48,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <aem.sdk.api>2025.7.21706.20250723T205632Z-250700</aem.sdk.api>
-    <aemanalyser.version>1.6.6</aemanalyser.version>
+    <aemanalyser.version>1.6.10</aemanalyser.version>
     <componentGroupName>Content Author Tools</componentGroupName>
   </properties>
   <build>
@@ -176,7 +178,7 @@ Bundle-Category: ${componentGroupName}
 Bundle-DocURL:
 -plugin org.apache.sling.caconfig.bndplugin.ConfigurationClassScannerPlugin
 -plugin org.apache.sling.bnd.models.ModelsScannerPlugin
-                                </bnd>
+                </bnd>
               </configuration>
             </execution>
           </executions>
@@ -349,13 +351,13 @@ Bundle-DocURL:
                   <pluginExecutionFilter>
                     <groupId>
                                             org.apache.maven.plugins
-                                        </groupId>
+                    </groupId>
                     <artifactId>
                                             maven-dependency-plugin
-                                        </artifactId>
+                    </artifactId>
                     <versionRange>
                                             [2.2,)
-                                        </versionRange>
+                    </versionRange>
                     <goals>
                       <goal>copy-dependencies</goal>
                       <goal>unpack</goal>
@@ -369,17 +371,17 @@ Bundle-DocURL:
                   <pluginExecutionFilter>
                     <groupId>
                                             org.codehaus.mojo
-                                        </groupId>
+                    </groupId>
                     <artifactId>
                                             build-helper-maven-plugin
-                                        </artifactId>
+                    </artifactId>
                     <versionRange>
                                             [1.5,)
-                                        </versionRange>
+                    </versionRange>
                     <goals>
                       <goal>
                                                 reserve-network-port
-                                            </goal>
+                      </goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
