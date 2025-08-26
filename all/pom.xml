@@ -76,6 +76,12 @@
                             <type>zip</type>
                             <target>/apps/contentgenerator-packages/application/install</target>
                         </embedded>
+                        <!-- <embedded>
+                            <groupId>com.adobe.aem.tools</groupId>
+                            <artifactId>aem-content-generator.google-adk-bundle</artifactId>
+                            <type>jar</type>
+                            <target>/apps/contentgenerator-packages/application/install</target>
+                        </embedded> -->
                         <embedded>
                             <groupId>com.adobe.cq</groupId>
                             <artifactId>core.wcm.components.examples.ui.config</artifactId>
@@ -213,7 +219,12 @@
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
-
+        <!-- <dependency>
+            <groupId>com.adobe.aem.tools</groupId>
+            <artifactId>aem-content-generator.google-adk-bundle</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency> -->
         <dependency>
             <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.examples.ui.config</artifactId>

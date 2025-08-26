@@ -32,6 +32,7 @@
     <module>it.tests</module>
     <module>dispatcher</module>
     <module>ui.tests</module>
+    <!-- <module>google-adk-bundle</module> -->
   </modules>
   <properties>
     <aem.host>localhost</aem.host>
