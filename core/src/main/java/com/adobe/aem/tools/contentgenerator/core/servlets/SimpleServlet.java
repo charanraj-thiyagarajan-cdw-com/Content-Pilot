@@ -48,9 +48,14 @@ public class SimpleServlet extends SlingAllMethodsServlet {
     @Override
     protected void doPost(final SlingHttpServletRequest req,
             final SlingHttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/plain");
-        String textfield = req.getParameter("textfield");
-        String textarea = req.getParameter("textarea");
-        resp.getWriter().write("Received:\nText Field: " + textfield + "\nText Area: " + textarea);
+        resp.setContentType("application/json");
+        resp.getWriter().write("{\n" +
+                "  \"jcr:title\": \"Go to Google\",\n" +
+                "  \"id\": \"gotoBtn\",\n" +
+                "  \"linkURL\": \"https://www.google.com\",\n" +
+                "  \"linkTarget\": \"_blank\",\n" +
+                "  \"accessibilityLabel\": \"Go to Google\",\n" +
+                "  \"sling:resourceType\": \"contentgenerator/components/button\"\n" +
+                "}");
     }
 }
