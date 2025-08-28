@@ -1,18 +1,47 @@
 $(document).ready(function () {
-  var $form = $("#contentPilotForm");
-  var $componentCreateForm = $("#componentCreateForm");
-  var $responseTextarea = $("#responseTextarea");
-  var $responseField = $("#responseField");
+  var $coreCompDialogForm = $("#coreCompDialogForm");
+  var $btnSubmit1 = $("#btnSubmit1");
+  var $responseField = $("#dialogResponseField");
+  if ($coreCompDialogForm.length && $btnSubmit1.length) {
+    $coreCompDialogForm.on("submit", function (e) {
+      e.preventDefault();
+      var params = new URLSearchParams();
+      $(this)
+        .serializeArray()
+        .forEach(function (field) {
+          params.append(field.name, field.value);
+        });
+      fetch("/bin/core-comp-dialog?" + params.toString(), {
+        method: "GET",
+      })
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (text) {
+          if ($responseField.length) {
+            $responseField.val(text);
+          }
+        })
+        .catch(function (err) {
+          if ($responseField.length) {
+            $responseField.val("Error: " + err);
+          }
+        });
+    });
+  }
+
+  var $adkForm = $("#adkForm");
+  var $btnSubmit2 = $("#btnSubmit2");
+  var $jsonResponse = $("#jsonResponse");
   var $componentTab = $("._coral-Tabs-itemLabel").filter(function () {
     return $(this).text().trim() === "Component";
   });
 
-  // First tab form submit
-  if ($form.length && $responseTextarea.length) {
-    $form.on("submit", function (e) {
+  if ($adkForm.length && $btnSubmit2.length) {
+    $adkForm.on("submit", function (e) {
       e.preventDefault();
       var formData = new FormData(this);
-      fetch("/bin/hello", {
+      fetch("/bin/adk", {
         method: "POST",
         body: formData,
       })
@@ -20,23 +49,29 @@ $(document).ready(function () {
           return response.text();
         })
         .then(function (text) {
-          $responseTextarea.val(text);
+          if ($jsonResponse.length) {
+            $jsonResponse.val(text);
+          }
           if ($componentTab.length) {
             $componentTab.click();
           }
         })
         .catch(function (err) {
-          $responseTextarea.val("Error: " + err);
+          if ($jsonResponse.length) {
+            $jsonResponse.val("Error: " + err);
+          }
         });
     });
   }
 
-  // Second tab form submit
-  if ($componentCreateForm.length && $responseField.length) {
+  var $componentCreateForm = $("#componentCreateForm");
+  var $btnSubmit3 = $("#btnSubmit3");
+  var $createResponseField = $("#createResponseField");
+  if ($componentCreateForm.length && $btnSubmit3.length) {
     $componentCreateForm.on("submit", function (e) {
       e.preventDefault();
       var formData = new FormData(this);
-      fetch("/bin/hello", {
+      fetch("/bin/adk", {
         method: "POST",
         body: formData,
       })
@@ -44,10 +79,14 @@ $(document).ready(function () {
           return response.text();
         })
         .then(function (text) {
-          $responseField.val(text);
+          if ($createResponseField.length) {
+            $createResponseField.val(text);
+          }
         })
         .catch(function (err) {
-          $responseField.val("Error: " + err);
+          if ($createResponseField.length) {
+            $createResponseField.val("Error: " + err);
+          }
         });
     });
   }

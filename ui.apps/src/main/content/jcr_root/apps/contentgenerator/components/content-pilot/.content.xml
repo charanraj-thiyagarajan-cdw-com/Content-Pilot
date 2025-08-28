@@ -44,7 +44,7 @@
                                     margin="{Boolean}true">
                                     <items jcr:primaryType="nt:unstructured">
                                         <container
-                                            granite:id="contentPilotForm"
+                                            granite:id="coreCompDialogForm"
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form"
                                             foundationForm="{Boolean}true"
@@ -52,33 +52,60 @@
                                             margin="{Boolean}true"
                                             maximized="{Boolean}true"
                                             style="vertical"
-                                            action="/bin/hello"
-                                            method="post">
+                                            action="/bin/core-comp-dialog"
+                                            method="get">
                                             <items jcr:primaryType="nt:unstructured">
-                                                <textField
-                                                    granite:id="textfield"
+                                                <componentPath
+                                                    granite:id="componentPath"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Text Field"
-                                                    name="textfield"
+                                                    fieldLabel="Component Path"
+                                                    name="componentPath"
                                                     required="{Boolean}true"
                                                     emptyText="Enter text here"/>
-                                                <textArea
-                                                    granite:id="textarea"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldLabel="Text Area"
-                                                    name="textarea"
-                                                    required="{Boolean}true"
-                                                    emptyText="Enter more details here"/>
                                                 <submitButton
-                                                    granite:id="btnSubmit"
+                                                    granite:id="btnSubmit1"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/button"
-                                                    text="Send to Servlet"
+                                                    text="Fetch component key/value pairs"
                                                     type="submit"/>
                                             </items>
                                         </container>
+                                        <container2
+                                            granite:id="adkForm"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form"
+                                            foundationForm="{Boolean}true"
+                                            loadingMask="{Boolean}true"
+                                            margin="{Boolean}true"
+                                            maximized="{Boolean}true"
+                                            style="vertical"
+                                            action="/bin/adk"
+                                            method="post">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <dialogResponse
+                                                    granite:id="dialogResponseField"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldLabel="Component Key/value Pairs"
+                                                    name="dialogResponse"
+                                                    emptyText="Servlet response will appear here"/>
+                                                <externalURL
+                                                    granite:id="externalURL"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="External Non-AEM page URL"
+                                                    name="externalURL"
+                                                    required="{Boolean}true"
+                                                    emptyText="Enter text here"/>
+                                                <submitButton
+                                                    granite:id="btnSubmit2"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                                                    text="Fetch component data from Non-AEM page"
+                                                    type="submit"/>
+                                            </items>
+                                        </container2>
                                     </items>
                                 </well>
                             </items>
@@ -108,28 +135,28 @@
                                             margin="{Boolean}true"
                                             maximized="{Boolean}true"
                                             style="vertical"
-                                            action="/bin/hello"
+                                            action="/bin/adk"
                                             method="post">
                                             <items jcr:primaryType="nt:unstructured">
-                                                <responseTextarea
-                                                    granite:id="responseTextarea"
+                                                <jsonResponse
+                                                    granite:id="jsonResponse"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldLabel="Response Textarea"
-                                                    name="responseTextarea"
-                                                    emptyText="Enter request data here"/>
-                                                <sendButton
-                                                    granite:id="btnSend"
+                                                    fieldLabel="Identified Component JSON"
+                                                    name="identifiedJSON"
+                                                    emptyText="Servlet response will appear here"/>
+                                                <submitButton
+                                                    granite:id="btnSubmit3"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/button"
-                                                    text="Send to Next Servlet"
+                                                    text="Send to /bin/adk"
                                                     type="submit"/>
-                                                <responseField
-                                                    granite:id="responseField"
+                                                <createResponse
+                                                    granite:id="createResponseField"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldLabel="Servlet Response"
-                                                    name="responseField"
+                                                    fieldLabel="Component Creation Response"
+                                                    name="createResponse"
                                                     emptyText="Servlet response will appear here"
                                                     disabled="{Boolean}true"/>
                                             </items>
