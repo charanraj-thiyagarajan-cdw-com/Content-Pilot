@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 @Component(service = { Servlet.class })
 @SlingServletPaths("/bin/hello")
-public class SimpleServlet extends SlingSafeMethodsServlet {
+public class SimpleServlet extends SlingAllMethodsServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,5 +43,14 @@ public class SimpleServlet extends SlingSafeMethodsServlet {
             final SlingHttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain");
         resp.getWriter().write("Hello from SimpleServlet!");
+    }
+
+    @Override
+    protected void doPost(final SlingHttpServletRequest req,
+            final SlingHttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/plain");
+        String textfield = req.getParameter("textfield");
+        String textarea = req.getParameter("textarea");
+        resp.getWriter().write("Received:\nText Field: " + textfield + "\nText Area: " + textarea);
     }
 }
