@@ -135,7 +135,7 @@
                                             margin="{Boolean}true"
                                             maximized="{Boolean}true"
                                             style="vertical"
-                                            action="/bin/adk"
+                                            action="/bin/importJson"
                                             method="post">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <jsonResponse
@@ -149,7 +149,7 @@
                                                     granite:id="btnSubmit3"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/button"
-                                                    text="Send to /bin/adk"
+                                                    text="Create page with components"
                                                     type="submit"/>
                                                 <createResponse
                                                     granite:id="createResponseField"

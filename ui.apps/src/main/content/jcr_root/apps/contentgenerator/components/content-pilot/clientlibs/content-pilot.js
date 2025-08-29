@@ -71,7 +71,7 @@ $(document).ready(function () {
     $componentCreateForm.on("submit", function (e) {
       e.preventDefault();
       var formData = new FormData(this);
-      fetch("/bin/adk", {
+      fetch("/bin/importJson", {
         method: "POST",
         body: formData,
       })
