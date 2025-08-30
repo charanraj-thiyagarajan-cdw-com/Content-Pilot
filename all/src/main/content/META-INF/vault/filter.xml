@@ -17,4 +17,5 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/contentgenerator-packages"/>
     <filter root="/apps/contentgenerator-vendor-packages"/>
+    <filter root="/apps/install"/>
 </workspaceFilter>

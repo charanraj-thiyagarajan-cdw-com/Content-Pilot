@@ -25,11 +25,10 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-@Component(service = Servlet.class,
-        property = {
-                "sling.servlet.paths=" + "/bin/importJson",
-                "sling.servlet.methods=POST"
-        })
+@Component(service = Servlet.class, property = {
+        "sling.servlet.paths=" + "/bin/importJson",
+        "sling.servlet.methods=POST"
+})
 
 public class ImportJsonServlet extends SlingAllMethodsServlet {
 
@@ -44,7 +43,7 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            //Read JSON string from form field
+            // Read JSON string from form field
             String inputJson = request.getParameter("identifiedJSON");
             if (inputJson == null || inputJson.isEmpty()) {
                 response.getWriter().write("No JSON data provided.");
@@ -54,45 +53,45 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
 
             JsonNode inputNode = mapper.readTree(inputJson);
 
-            //wrapper JSON
+            // wrapper JSON
             ObjectNode rootNode = mapper.createObjectNode();
             rootNode.put("pageName", "imported-button-page");
             rootNode.put("title", "Imported Page with Button");
             rootNode.put("template", "/conf/contentgenerator/settings/wcm/templates/page-content");
             rootNode.put("parentPath", "/content/contentgenerator/us");
 
-            ObjectNode componentNode = mapper.createObjectNode();
-            componentNode.put("path", "root/container/container/button");
-
-            ObjectNode props = mapper.createObjectNode();
-
-            // Ensure sling:resourceType has /apps prefix
-            String resType = inputNode.path("sling:resourceType").asText();
-            if (!resType.startsWith("/apps/")) {
-                resType = "/apps/" + resType;
-            }
-            props.put("sling:resourceType", resType);
-
-            // Copy all fields from incoming JSON
-            inputNode.fields().forEachRemaining(entry -> {
-                props.put(entry.getKey(), entry.getValue().asText());
-            });
-
-            props.put("jcr:primaryType", "nt:unstructured");
-
-            componentNode.set("properties", props);
-
             ArrayNode componentsArray = mapper.createArrayNode();
-            componentsArray.add(componentNode);
+
+            if (!inputNode.isArray()) {
+                response.getWriter().write("Input JSON must be an array of button objects.");
+                return;
+            }
+            int idx = 0;
+            for (JsonNode buttonNode : inputNode) {
+                ObjectNode componentNode = mapper.createObjectNode();
+                String buttonId = buttonNode.has("id") ? buttonNode.get("id").asText() : "button-" + idx;
+                componentNode.put("path", "root/container/container/" + buttonId);
+
+                ObjectNode props = mapper.createObjectNode();
+                buttonNode.fields().forEachRemaining(entry -> {
+                    props.put(entry.getKey(), entry.getValue().asText());
+                });
+                props.put("jcr:primaryType", "nt:unstructured");
+                componentNode.set("properties", props);
+                componentsArray.add(componentNode);
+                idx++;
+            }
+
             rootNode.set("components", componentsArray);
             log.info("Printing rootnode... " + rootNode);
+            log.info("JSON for page creation: {}",
+                    mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode));
 
-            log.info("JSON for page creation: {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode));
-
-            //Creating page properties
+            // Creating page properties
             String parentPath = rootNode.path("parentPath").asText("/content/contentgenerator/us");
             String pageName = rootNode.path("pageName").asText("imported-page");
-            String template = rootNode.path("template").asText("/conf/contentgenerator/settings/wcm/templates/page-content");
+            String template = rootNode.path("template")
+                    .asText("/conf/contentgenerator/settings/wcm/templates/page-content");
             String title = rootNode.path("title").asText("Imported Page");
 
             PageManager pageManager = pageManagerFactory.getPageManager(resolver);
@@ -103,7 +102,7 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
                 return;
             }
 
-            //Create components
+            // Create components
             JsonNode components = rootNode.path("components");
             if (components.isArray()) {
                 for (JsonNode comp : components) {
@@ -114,7 +113,8 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
                     }
                     if (parentRes != null) {
                         ModifiableValueMap mvm = parentRes.adaptTo(ModifiableValueMap.class);
-                        for (Iterator<Map.Entry<String, JsonNode>> it = comp.path("properties").fields(); it.hasNext();) {
+                        for (Iterator<Map.Entry<String, JsonNode>> it = comp.path("properties").fields(); it
+                                .hasNext();) {
                             Map.Entry<String, JsonNode> field = it.next();
                             if (field.getValue().isArray()) {
                                 mvm.put(field.getKey(), mapper.convertValue(field.getValue(), String[].class));
@@ -141,7 +141,8 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
         Resource currentRes = null;
 
         for (String part : parts) {
-            if (part.isEmpty()) continue;
+            if (part.isEmpty())
+                continue;
             currentPath.append("/").append(part);
             Resource res = resolver.getResource(currentPath.toString());
             if (res == null) {

@@ -110,6 +110,13 @@
                 <configuration>
                     <verbose>true</verbose>
                     <failOnError>true</failOnError>
+                    <embeddeds>
+                        <embedded>
+                            <groupId>org.jsoup</groupId>
+                            <artifactId>jsoup</artifactId>
+                            <target>/apps/install</target>
+                        </embedded>
+                    </embeddeds>
                 </configuration>
             </plugin>
             <plugin>

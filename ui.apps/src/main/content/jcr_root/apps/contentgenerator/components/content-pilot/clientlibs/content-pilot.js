@@ -1,34 +1,35 @@
 $(document).ready(function () {
-  var $coreCompDialogForm = $("#coreCompDialogForm");
-  var $btnSubmit1 = $("#btnSubmit1");
-  var $responseField = $("#dialogResponseField");
-  if ($coreCompDialogForm.length && $btnSubmit1.length) {
-    $coreCompDialogForm.on("submit", function (e) {
-      e.preventDefault();
-      var params = new URLSearchParams();
-      $(this)
-        .serializeArray()
-        .forEach(function (field) {
-          params.append(field.name, field.value);
-        });
-      fetch("/bin/core-comp-dialog?" + params.toString(), {
-        method: "GET",
-      })
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (text) {
-          if ($responseField.length) {
-            $responseField.val(text);
-          }
-        })
-        .catch(function (err) {
-          if ($responseField.length) {
-            $responseField.val("Error: " + err);
-          }
-        });
-    });
-  }
+  // var $coreCompDialogForm = $("#coreCompDialogForm");
+  // var $btnSubmit1 = $("#btnSubmit1");
+  // var $responseField = $("#dialogResponseField");
+  // if ($coreCompDialogForm.length && $btnSubmit1.length) {
+  //   $coreCompDialogForm.on("submit", function (e) {
+  //     e.preventDefault();
+  //     var params = new URLSearchParams();
+  //     $(this)
+  //       .serializeArray()
+  //       .forEach(function (field) {
+  //         params.append(field.name, field.value);
+  //       });
+  //     fetch("/bin/core-comp-dialog?" + params.toString(), {
+  //       method: "GET",
+  //     })
+  //       .then(function (response) {
+  //         return response.text();
+  //       })
+  //       .then(function (text) {
+  //         if ($responseField.length) {
+  //           $responseField.val(text);
+  //         }
+  //       })
+  //       .catch(function (err) {
+  //         if ($responseField.length) {
+  //           $responseField.val("Error: " + err);
+  //         }
+  //       });
+  //   });
+  // }
+  // https://www.scrapingcourse.com/ecommerce/
 
   var $adkForm = $("#adkForm");
   var $btnSubmit2 = $("#btnSubmit2");
