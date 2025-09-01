@@ -67,7 +67,7 @@ $(document).ready(function () {
 
   var $componentCreateForm = $("#componentCreateForm");
   var $btnSubmit3 = $("#btnSubmit3");
-  var $createResponseField = $("#createResponseField");
+  var $createResponseContainer = $("#createResponseContainer");
   if ($componentCreateForm.length && $btnSubmit3.length) {
     $componentCreateForm.on("submit", function (e) {
       e.preventDefault();
@@ -80,13 +80,26 @@ $(document).ready(function () {
           return response.text();
         })
         .then(function (text) {
-          if ($createResponseField.length) {
-            $createResponseField.val(text);
+          if ($createResponseContainer.length) {
+            $createResponseContainer.empty();
+            var url = text.trim();
+            var $label = $("<span>", {
+              text: "Page and components created successfully at:",
+              style: "display:block;margin:8px 0;",
+            });
+            var $link = $("<a>", {
+              href: url,
+              text: url,
+              target: "_blank",
+              style: "color:#0073e6;word-break:break-all;display:block;margin:8px 0;",
+            });
+            $createResponseContainer.append($label).append($link);
           }
         })
         .catch(function (err) {
-          if ($createResponseField.length) {
-            $createResponseField.val("Error: " + err);
+          if ($createResponseContainer.length) {
+            $createResponseContainer.empty();
+            $createResponseContainer.text("Error: " + err);
           }
         });
     });

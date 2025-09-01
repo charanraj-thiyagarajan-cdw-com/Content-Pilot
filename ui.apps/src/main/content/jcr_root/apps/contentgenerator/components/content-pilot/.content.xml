@@ -152,13 +152,10 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/button"
                                                     text="Create page with components"
                                                     type="submit"/>
-                                                <createResponse
-                                                    granite:id="createResponseField"
+                                                <emptySpace
+                                                    granite:id="createResponseContainer"
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldLabel="Component Creation Response"
-                                                    name="createResponse"
-                                                    emptyText="Servlet response will appear here"/>
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"/>
                                             </items>
                                         </container>
                                     </items>

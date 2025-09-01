@@ -127,7 +127,9 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
             }
 
             resolver.commit();
-            response.getWriter().write(" Page and components created successfully at: " + page.getPath());
+            String serverUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            String pageUrl = serverUrl + page.getPath() + ".html";
+            response.getWriter().write(pageUrl);
 
         } catch (PersistenceException | RepositoryException | WCMException e) {
             log.error("Error creating page/components", e);
