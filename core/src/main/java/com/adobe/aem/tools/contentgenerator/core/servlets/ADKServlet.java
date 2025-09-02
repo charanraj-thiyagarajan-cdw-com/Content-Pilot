@@ -34,7 +34,7 @@ public class ADKServlet extends SlingAllMethodsServlet {
         String htmlElements = "";
         try {
             Document doc = Jsoup.connect(req.getParameter("externalURL")).get();
-            Elements elements = doc.select("button, p");
+            Elements elements = doc.select("div");
             StringBuilder inputBuilder = new StringBuilder();
             for (Element el : elements) {
                 inputBuilder.append(el.outerHtml()).append("\n");
