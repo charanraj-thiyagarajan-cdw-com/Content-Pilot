@@ -13,3 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
+
+js/bootstrap.bundle.js
+js/bootstrap.bundle.min.js
+js/bootstrap.esm.js
+js/bootstrap.esm.min.js
+js/bootstrap.js
+js/bootstrap.min.js

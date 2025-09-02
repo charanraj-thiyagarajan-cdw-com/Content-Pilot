@@ -55,30 +55,29 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
 
             // wrapper JSON
             ObjectNode rootNode = mapper.createObjectNode();
-            rootNode.put("pageName", "imported-button-page");
-            rootNode.put("title", "Imported Page with Button");
-            rootNode.put("template", "/conf/contentgenerator/settings/wcm/templates/page-content");
+            rootNode.put("pageName", "imported-component-page");
+            rootNode.put("title", "Imported Page with component");
+            rootNode.put("template", "/conf/contentgenerator/settings/wcm/templates/blank");
             rootNode.put("parentPath", "/content/contentgenerator/us");
 
             ArrayNode componentsArray = mapper.createArrayNode();
 
             if (!inputNode.isArray()) {
-                response.getWriter().write("Input JSON must be an array of button objects.");
+                response.getWriter().write("Input JSON must be an array of component objects.");
                 return;
             }
             int idx = 0;
-            for (JsonNode buttonNode : inputNode) {
-                ObjectNode componentNode = mapper.createObjectNode();
-                String buttonId = buttonNode.has("id") ? buttonNode.get("id").asText() : "button-" + idx;
-                componentNode.put("path", "root/container/container/" + buttonId);
+            for (JsonNode componentNode : inputNode) {
+                ObjectNode component = mapper.createObjectNode();
+                component.put("path", "root/container/component-" + idx);
 
                 ObjectNode props = mapper.createObjectNode();
-                buttonNode.fields().forEachRemaining(entry -> {
+                componentNode.fields().forEachRemaining(entry -> {
                     props.put(entry.getKey(), entry.getValue().asText());
                 });
                 props.put("jcr:primaryType", "nt:unstructured");
-                componentNode.set("properties", props);
-                componentsArray.add(componentNode);
+                component.set("properties", props);
+                componentsArray.add(component);
                 idx++;
             }
 
@@ -91,7 +90,7 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
             String parentPath = rootNode.path("parentPath").asText("/content/contentgenerator/us");
             String pageName = rootNode.path("pageName").asText("imported-page");
             String template = rootNode.path("template")
-                    .asText("/conf/contentgenerator/settings/wcm/templates/page-content");
+                    .asText("/conf/contentgenerator/settings/wcm/templates/blank");
             String title = rootNode.path("title").asText("Imported Page");
 
             PageManager pageManager = pageManagerFactory.getPageManager(resolver);
@@ -128,7 +127,7 @@ public class ImportJsonServlet extends SlingAllMethodsServlet {
 
             resolver.commit();
             String serverUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-            String pageUrl = serverUrl + page.getPath() + ".html";
+            String pageUrl = serverUrl + "/editor.html" + page.getPath() + ".html";
             response.getWriter().write(pageUrl);
 
         } catch (PersistenceException | RepositoryException | WCMException e) {
